@@ -4,16 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>关注公众号</title>
+    <script>
+        ! function (e, t) {
+            var o;
+            "function" == typeof define && define.amd ? define("xe-clipboard", ["exports"], t) : "undefined" !=
+                typeof exports ? t(exports) : (t((o = {
+                        exports: {}
+                    }).exports),
+                    e.XEClipboard = o.exports.default)
+        }("undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : this, function (e) {
+            "use strict";
+            Object.defineProperty(e, "__esModule", {
+                    value: !0
+                }),
+                e.default = void 0;
+            var d, i = window.document;
+
+            function t(e) {
+                var t, o, n = !1;
+                try {
+                    t = e,
+                        d || ((d = i.createElement("textarea")).id = "$XECopy",
+                            (o = d.style).width = "48px",
+                            o.height = "24px",
+                            o.position = "fixed",
+                            o.zIndex = "0",
+                            o.left = "-500px",
+                            o.top = "-500px",
+                            i.body.appendChild(d)),
+                        d.value = null == t ? "" : "" + t,
+                        d.focus(),
+                        d.select(),
+                        d.setSelectionRange(0, d.value.length),
+                        n = i.execCommand("copy")
+                } catch (e) {}
+                return n
+            }
+
+            function o(e) {
+                return t(e)
+            }
+            o.copy = t,
+                e.default = o
+        });
+    </script>
 </head>
 
-<body>
-
-
-    <div style="width: 98%;margin:0 auto;">
-        <img style="width:100%;display:block;background-color:#ccc;" src="./k128.png">
-        <a href="weixin://dl/business/" οnclick="PIWI_SUBMIT.Weixin_Open()">我知道了</a>
+<body style="background-color: rgba(0,0,0,0.69);">
+    <div style="width: 82%;margin: 0 auto;padding-top: 10px;" id="btn1">
+        <img style="width: 92%;display:block;margin: 0 auto;"
+            src="https://anyou.oss-cn-beijing.aliyuncs.com/topic/k128.png">
+        <div
+            style="
+        background: linear-gradient(180deg, #6ACEFB 0%, #3BA2F7 100%);color: #fff;text-align: center;padding: 12px 0;border-radius: 8px;">
+            我知道了</div>
     </div>
+
+    <script>
+        window.onload = function () {
+
+            var gzh = '';
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == 'gzh') {
+                    gzh = pair[1];
+                    break;
+                }
+            }
+
+            document.getElementById('btn1').addEventListener('click', function (evnt) {
+                // 由于浏览器的安全机制，操作剪贴板必须在事件之内才能有效
+                if (XEClipboard.copy(gzh)) {
+                    alert('复制成功，微信搜索 "' + gzh + '" 加入吧')
+                }
+            })
+        }
+    </script>
 
 
 </body>
